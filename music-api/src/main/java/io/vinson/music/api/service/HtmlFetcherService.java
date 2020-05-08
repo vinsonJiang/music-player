@@ -1,21 +1,21 @@
 package io.vinson.music.api.service;
 
-import io.vinson.music.api.domain.RequestParam;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import io.vinson.music.api.domain.RequestBody;
 import io.vinson.music.api.util.UrlBuilder;
 import org.apache.http.*;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.HttpURLConnection;
 import java.util.Map;
 
 /**
@@ -24,26 +24,25 @@ import java.util.Map;
  */
 public class HtmlFetcherService {
 	
-	public static String exec(RequestParam requestParam) throws IOException {
+	public static String exec(RequestBody requestBody) throws IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		String rs = "";
-        HttpUriRequest httpRequest = null;
-        if(requestParam.getMethod() == "GET") {
-            String url = requestParam.getUrl();
-            if(requestParam.getBody() != null) {
-                UrlBuilder builder = UrlBuilder.builder(requestParam.getUrl());
-                builder.addParamMap(requestParam.getBody());
+        HttpUriRequest httpRequest;
+        if(requestBody.getMethod() == "GET") {
+            String url = requestBody.getUrl();
+            if(requestBody.getParams() != null) {
+                UrlBuilder builder = UrlBuilder.builder(requestBody.getUrl());
+                JsonObject jsonObject = requestBody.getParams();
+                for(Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+                    builder.addParam(entry.getKey(), entry.getValue().getAsString());
+                }
                 url = builder.getUrl();
             }
             httpRequest = new HttpGet(url);
         } else {
-            List<NameValuePair> parameters = new ArrayList<NameValuePair>(0);
-            for(Map.Entry<String, String> entry : requestParam.getBody().entrySet()) {
-                parameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-            }
-            UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(parameters,"UTF-8");
-            HttpPost httpPost = new HttpPost(requestParam.getUrl());
-            httpPost.setEntity(formEntity);
+            StringEntity requestEntity = new StringEntity(requestBody.getParams().toString(), "utf-8");
+            HttpPost httpPost = new HttpPost(requestBody.getUrl());
+            httpPost.setEntity(requestEntity);
             httpRequest = httpPost;
         }
 
@@ -53,7 +52,7 @@ public class HtmlFetcherService {
         
         HttpEntity entity = response.getEntity();
         
-        if (response.getStatusLine().getStatusCode() == 200 && entity != null) {
+        if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK && entity != null) {
         	rs = EntityUtils.toString(entity, "utf-8");
         }
         

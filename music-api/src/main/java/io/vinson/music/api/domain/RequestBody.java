@@ -1,18 +1,20 @@
 package io.vinson.music.api.domain;
 
+import com.google.gson.JsonObject;
+
 import java.util.Map;
 
 /**
  * @author: jiangweixin
  * @date: 2020/5/7
  */
-public class RequestParam {
+public class RequestBody {
 
     private String method;
 
     private String url;
 
-    private Map<String, String> body;
+    private JsonObject params;
 
     private String encode;
 
@@ -22,7 +24,7 @@ public class RequestParam {
         return method;
     }
 
-    public RequestParam setMethod(String method) {
+    public RequestBody setMethod(String method) {
         this.method = method;
         return this;
     }
@@ -31,17 +33,17 @@ public class RequestParam {
         return url;
     }
 
-    public RequestParam setUrl(String url) {
+    public RequestBody setUrl(String url) {
         this.url = url;
         return this;
     }
 
-    public Map<String, String> getBody() {
-        return body;
+    public JsonObject getParams() {
+        return params;
     }
 
-    public RequestParam setBody(Map<String, String> body) {
-        this.body = body;
+    public RequestBody setParams(JsonObject params) {
+        this.params = params;
         return this;
     }
 
@@ -49,7 +51,7 @@ public class RequestParam {
         return encode;
     }
 
-    public RequestParam setEncode(String encode) {
+    public RequestBody setEncode(String encode) {
         this.encode = encode;
         return this;
     }
@@ -58,7 +60,7 @@ public class RequestParam {
         return format;
     }
 
-    public RequestParam setFormat(String format) {
+    public RequestBody setFormat(String format) {
         this.format = format;
         return this;
     }

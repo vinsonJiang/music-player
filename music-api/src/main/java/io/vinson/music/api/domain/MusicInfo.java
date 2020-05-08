@@ -12,6 +12,8 @@ public class MusicInfo {
 
     private String name;
 
+    private String addr;
+
     private List<String> artist;
 
     private String album;
@@ -39,6 +41,15 @@ public class MusicInfo {
 
     public MusicInfo setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public MusicInfo setAddr(String addr) {
+        this.addr = addr;
         return this;
     }
 
@@ -101,6 +112,7 @@ public class MusicInfo {
         return "MusicInfo{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", addr='" + addr + '\'' +
                 ", artist=" + artist +
                 ", album='" + album + '\'' +
                 ", urlId='" + urlId + '\'' +
