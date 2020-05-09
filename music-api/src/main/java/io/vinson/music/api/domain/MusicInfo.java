@@ -112,8 +112,8 @@ public class MusicInfo {
         return "MusicInfo{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", addr='" + addr + '\'' +
                 ", artist=" + artist +
+                ", addr='" + addr + '\'' +
                 ", album='" + album + '\'' +
                 ", urlId='" + urlId + '\'' +
                 ", picId='" + picId + '\'' +
