@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>HomePage</h2>
+    <div class="container">
+      <h1>{{ msg }}</h1>
+      <h2>HomePage</h2>
+    </div>
   </div>
 </template>
 
