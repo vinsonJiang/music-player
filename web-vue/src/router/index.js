@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
-import Footer from '@/components/Footer'
+import Header from '@/components/Header'
+import MusicList from '@/components/MusicList'
 
 Vue.use(Router)
 
@@ -10,19 +11,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'MusicList',
+      component: MusicList
     },
     {
       path: '/home',
       name: 'Home',
       component: Home
     },
-    // {
-    //   path: '/footer',
-    //   name: 'Footer',
-    //   component: Footer
-    // },
+    {
+      path: '/header',
+      name: 'Header',
+      component: Header
+    },
     {
       path: '/hello-world',
       name: 'HelloWorld',
